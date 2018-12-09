@@ -9,7 +9,7 @@ namespace Kladionica.Models
     public class Transaction
     {
         [Key]
-        public ulong TransactionId { get; set; }
+        public int TransactionId { get; set; }
         public static DateTime Date { get; set; } = System.DateTime.Now;
         [Required(ErrorMessage = "Amount is required.")]
         public decimal Amount { get; set; }

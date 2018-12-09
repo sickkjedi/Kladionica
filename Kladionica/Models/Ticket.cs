@@ -25,14 +25,14 @@ namespace Kladionica.Models
 
         public decimal GetTotalQuota()
         {
-            decimal sum = 0;
+            decimal mul = 1;
             foreach(TicketPair ticketPair in TicketPairs)
             {
-                string Type = ticketPair.Type;
-                sum += ticketPair.Pair.GetTypeQuota(Type);
+                char Type = ticketPair.Type;
+                mul *= ticketPair.Pair.GetTypeQuota(Type);
             }
 
-            return sum;
+            return mul;
         }
     }
 }

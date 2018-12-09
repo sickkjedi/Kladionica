@@ -14,6 +14,13 @@ namespace Kladionica.Models
         public string Pair1 { get; set; }
         [Required, StringLength(50, MinimumLength = 2)]
         public string Pair2 { get; set; }
+        public string FullPair
+        {
+            get
+            {
+                return Pair1 + " - " + Pair2;
+            }
+        }
         [Required]
         public decimal Type1 { get; set; }
         [Required]
@@ -29,13 +36,13 @@ namespace Kladionica.Models
         public virtual ICollection<TicketPair> TicketPairs { get; set; } //navigacijski property
         //svaki par moze biti u vise listica
 
-        public decimal GetTypeQuota(string Type)
+        public decimal GetTypeQuota(char Type)
         {
             switch (Type)
             {
-                case "Type1": return Type1;
-                case "Type2": return Type2;
-                case "Typex": return Typex;
+                case '1': return Type1;
+                case '2': return Type2;
+                case 'x': return Typex;
                 default: return 0;
             }
         }
