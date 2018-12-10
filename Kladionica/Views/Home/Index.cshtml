@@ -11,7 +11,7 @@
             @foreach (var cat in Model)
             {
                 <label class="btn btn-outline-primary">
-                    <input type="radio"> @cat.Name
+                    <input type="radio" name="sport-select" value="@cat.Name"> @cat.Name
                 </label>
             }
         </div>
@@ -28,3 +28,17 @@
         </div>
 
     </div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var url = '@Url.Action("PairsList", "Home")';
+            $('input[type=radio]').change(function()
+            {
+                var keyWord = $(this).val();
+                $('#pairs-table').load(url, { sportName: keyWord });
+            });
+        });
+    </script>
+}
+

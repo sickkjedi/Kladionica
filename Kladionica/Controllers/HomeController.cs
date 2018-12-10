@@ -12,7 +12,7 @@ namespace Kladionica.Controllers
     {
         private KladionicaContext db = new KladionicaContext();
 
-        public ActionResult Index(string sportName) 
+        public ActionResult Index() 
         {
             return View(db.Categories.ToList());
         }
