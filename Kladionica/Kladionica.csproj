@@ -246,7 +246,8 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Shared\_NavBar.cshtml" />
-    <Content Include="Views\Shared\PairsList.cshtml" />
+    <Content Include="Views\Shared\_PairsList.cshtml" />
+    <Content Include="Views\Shared\_Ticket.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

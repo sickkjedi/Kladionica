@@ -5,7 +5,7 @@
 
 
 <div class="row">
-    <div class="col-md-2">
+    <div class="col-md-2" >
         <div id="sports-list" class="btn-group-vertical btn-group-toggle" data-toggle="buttons">
 
             @foreach (var cat in Model)
@@ -15,30 +15,86 @@
                 </label>
             }
         </div>
-        </div>
-
-        <div class="col-md-7" id="pairs-table">
-            @{
-                Html.RenderAction("PairsList", new { sportName = ""});
-            }
-        </div>
-
-        <div class="col-md-3">
-            <h2>Ticket</h2>
-        </div>
-
     </div>
+
+    <div class="col-md-7" id="pairs-table">
+        @{
+            Html.RenderAction("PairsList", new { sportName = ""});
+        }
+    </div>
+
+    <div class="col-md-3" id="ticket">
+        @{
+            Html.RenderAction("Ticket");
+        }
+    </div>
+
+</div>
 
 @section Scripts{
     <script type="text/javascript">
         $(document).ready(function () {
             var url = '@Url.Action("PairsList", "Home")';
-            $('input[type=radio]').change(function()
+            $('input[name=sport-select]').change(function()
             {
                 var keyWord = $(this).val();
                 $('#pairs-table').load(url, { sportName: keyWord });
             });
         });
+
+        $("body").on("click", "#btnAdd", function () {
+            //Reference the entire row of the clicked button
+            var $btnRow = $(this).closest("tr");
+
+            //Get bet type and quota from the button
+            var betType = $(this).val();
+            var quota = $(this).attr('title');
+
+            //Get Pair ID and Full Name string from the button table row
+            var pairId = $btnRow.find("td:nth-child(1)");
+            var pairName = $btnRow.find("td:nth-child(2)");
+
+            //Get the reference of the Table's TBODY element
+            var tBody = $("#tblTicket > TBODY")[0];
+
+            //Add Row
+            var row = tBody.insertRow(-1);
+
+            //Add Pair ID cell
+            var cell = $(row.insertCell(-1));
+            cell.html(pairId.text());
+
+            //Add Pair name cell
+            cell = $(row.insertCell(-1));
+            cell.html(pairName.text());
+
+            //Add Type and Quota cell
+            cell = $(row.insertCell(-1));
+            cell.html(betType + " - " + quota);
+
+            //Add remove button
+            cell = $(row.insertCell(-1));
+            var btnRemove = $("<input />");
+            btnRemove.attr("type", "button");
+            btnRemove.attr("onclick", "Remove(this);");
+            btnRemove.attr("class", "btn btn-sm btn-danger");
+            btnRemove.val("X");
+            cell.append(btnRemove);
+
+        });
+
+        function Remove(button) {
+            //Determine the reference of the Row using the Button.
+            var row = $(button).closest("tr");
+            var name = $("td", row).eq(1).html();
+            if (confirm("Da li želite ukloniti: " + name)) {
+                //Get the reference of the Table.
+                var table = $("#tblTicket")[0];
+
+                //Delete the Table row using it's Index.
+                table.deleteRow(row[0].rowIndex);
+            }
+        };
     </script>
 }
 

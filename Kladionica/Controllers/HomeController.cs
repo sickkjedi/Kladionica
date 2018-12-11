@@ -27,10 +27,18 @@ namespace Kladionica.Controllers
                 selectedPairs = db.Pairs.Where(p => p.Category.Name.Contains(sportName)).ToList();
             }
 
-            return PartialView(selectedPairs);
+            return PartialView("_PairsList", selectedPairs);
         }
 
-            public ActionResult About()
+        public ActionResult Ticket()
+        {
+
+            return PartialView("_Ticket", db.Pairs.ToList());
+        }
+
+
+
+        public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
 
