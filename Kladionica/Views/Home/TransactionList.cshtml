@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Kladionica.Models.Transaction>
+
+<h2>TransactionList</h2>
+
+<div id="transaction-list">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var trans in Model)
+            {
+                <tr>
+                    <td>
+                        @trans.TransactionId
+                    </td>
+                    <td>
+                        @trans.Amount
+                    </td>
+                    <td>
+                        @trans.Date
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+

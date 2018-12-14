@@ -10,7 +10,7 @@ namespace Kladionica.Models
     {
         [Key]
         public int TransactionId { get; set; }
-        public static DateTime Date { get; set; } = System.DateTime.Now;
+        public DateTime Date { get; set; } = System.DateTime.Now;
         [Required(ErrorMessage = "Amount is required.")]
         public decimal Amount { get; set; }
         public bool Success { get; set; }

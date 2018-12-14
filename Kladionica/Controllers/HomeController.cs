@@ -48,6 +48,11 @@ namespace Kladionica.Controllers
                     return Json(new { IsCreated = false, Message = "Ticket not created; Not enough funds." });
                 }
                 db.Users.Find(1).Balance = currUser.Balance - newTicket.BetAmount;
+
+                Models.Transaction transaction = new Models.Transaction();
+                transaction.Amount = newTicket.BetAmount;
+                transaction.UserID = 1;
+                db.Transactions.Add(transaction);
                 db.Tickets.Add(newTicket);
                 db.SaveChanges();
                 return Json(new { IsCreated = true, Message = "Ticket successfuly created." });
@@ -65,8 +70,10 @@ namespace Kladionica.Controllers
 
         public ActionResult TransactionList()
         {
+            List<Models.Transaction> currUserTransactions = new List<Models.Transaction>();
+            currUserTransactions = db.Transactions.Where(t => t.UserID.Equals(1)).ToList();
 
-            return View(db.Transactions.ToList());
+            return View(currUserTransactions);
         }
     }
 }
