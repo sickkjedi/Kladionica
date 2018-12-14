@@ -13,10 +13,10 @@ namespace Kladionica.Models
         public int TicketID { get; set; } //FK
         [Key, Column(Order = 1)]
         public int PairID { get; set; } //FK
+        [Required]
+        public char Type { get; set; }
 
         public virtual Ticket Ticket { get; set; }
         public virtual Pair Pair { get; set; }
-        [Required]
-        public char Type { get; set; }
     }
 }

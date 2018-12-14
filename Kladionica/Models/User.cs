@@ -25,7 +25,7 @@ namespace Kladionica.Models
         public string City { get; set; }
         [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
-        public decimal Balance { get; set; } = 0;
+        public decimal Balance { get; set; } = 50;
 
 
     }

@@ -1,9 +1,8 @@
-﻿@model IEnumerable<Kladionica.Models.Pair>
-
+﻿
 <table id="tblTicket" class="table table-hover">
     <thead>
         <tr>
-            
+            <th colspan="4">Listić</th>
         </tr>
     </thead>
 
@@ -11,23 +10,20 @@
 
     </tbody>
 
-
     <tfoot>
-        <tr>
-            <td>
-                <p>Ukupna kvota:</p>
-            </td> 
-            <td>
-
-            </td>
-        </tr>
-
         <tr>
             <td>
                 <p>Ulog:</p>
             </td>
             <td>
-                <input type="number" id="betAmount" step="0.01" min="0" />
+                <input type="number" id="betAmount" step="0.01" min="0" placeholder="KN"/>
+            </td>
+            <td>
+                <p>Kvota:</p>
+                
+            </td>
+            <td>
+                <div id="total-qouta"></div>
             </td>
         </tr>
 
@@ -36,10 +32,10 @@
                 <p>Dobitak:</p>
             </td>
             <td>
-
+                <div id="winAmount"></div>
             </td>
-            <td>
-                <input type="button" id="btnSubmit" value="Uplati"/>
+            <td colspan="2">
+                <input type="button" id="btnSubmit" value="Uplati" />
             </td>
         </tr>
     </tfoot>

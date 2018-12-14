@@ -33,8 +33,7 @@ namespace Kladionica.Models
         public int CategoryID { get; set; } //FK
         public virtual Category Category { get; set; }
 
-        public virtual ICollection<TicketPair> TicketPairs { get; set; } //navigacijski property
-        //svaki par moze biti u vise listica
+        public virtual ICollection<TicketPair> TicketPairs { get; set; } //navigation property
 
         public decimal GetTypeQuota(char Type)
         {

@@ -33,9 +33,19 @@ namespace Kladionica.Controllers
         public ActionResult Ticket()
         {
 
-            return PartialView("_Ticket", db.Pairs.ToList());
+            return PartialView("_Ticket");
         }
 
+        [HttpPost]
+        public ActionResult InsertTicket(Models.Ticket newTicket)
+        {
+            if (newTicket != null)
+            {
+                db.Tickets.Add(newTicket);
+            }
+
+            return Json(db.SaveChanges());
+        }
 
 
         public ActionResult About()

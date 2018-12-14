@@ -33,14 +33,54 @@
 
 @section Scripts{
     <script type="text/javascript">
+        var totalQuota = 1.0;
+        var amount = 0;
+
         $(document).ready(function () {
             var url = '@Url.Action("PairsList", "Home")';
-            $('input[name=sport-select]').change(function()
-            {
+            //Update pairs table on sport category select
+            $('input[name=sport-select]').change(function() {
                 var keyWord = $(this).val();
                 $('#pairs-table').load(url, { sportName: keyWord });
             });
+
+            //Update total winnings on bet amount field change
+            $('input[id=betAmount]').change(function () {
+                amount = $(this).val();
+                amount = (amount * totalQuota).toFixed(2);
+                $("#winAmount").html("<strong> " + amount.toString() + " KN" + "</strong>")
+            });
         });
+
+
+        //Remove an item from the ticket table
+        function Remove(button) {
+            //Determine the reference of the Row using the Button.
+            var row = $(button).closest("tr");
+            var name = $("td", row).eq(1).html();
+            if (confirm("Da li želite ukloniti: " + name)) {
+                //Get the reference of the Table.
+                var table = $("#tblTicket")[0];
+
+                //Delete the Table row using it's Index.
+                table.deleteRow(row[0].rowIndex);
+                var quota = $("td", row).eq(2).html().split("- ")[1];
+                
+                UpdateTotalQuota(parseFloat(quota.replace(',', '.')) * -1.0);
+            }
+        };
+
+        //Insert current total qouta
+        function UpdateTotalQuota(quota) {
+            if (quota < 0) {
+                totalQuota = (totalQuota / (-1.0 * quota)).toFixed(2);
+            }
+            else if (quota > 0) {
+                totalQuota = (totalQuota * quota).toFixed(2);
+            }
+            $("#total-qouta").html("<strong> " + totalQuota.toString() + "</strong>")
+        };
+
 
         $("body").on("click", "#btnAdd", function () {
             //Reference the entire row of the clicked button
@@ -49,6 +89,7 @@
             //Get bet type and quota from the button
             var betType = $(this).val();
             var quota = $(this).attr('title');
+            UpdateTotalQuota(parseFloat(quota.replace(',', '.')));
 
             //Get Pair ID and Full Name string from the button table row
             var pairId = $btnRow.find("td:nth-child(1)");
@@ -83,18 +124,42 @@
 
         });
 
-        function Remove(button) {
-            //Determine the reference of the Row using the Button.
-            var row = $(button).closest("tr");
-            var name = $("td", row).eq(1).html();
-            if (confirm("Da li želite ukloniti: " + name)) {
-                //Get the reference of the Table.
-                var table = $("#tblTicket")[0];
 
-                //Delete the Table row using it's Index.
-                table.deleteRow(row[0].rowIndex);
-            }
-        };
+        //Send ticket data
+         $("body").on("click", "#btnSubmit", function () {
+            var ticketData = {
+                "BetAmount": +$('input[id=betAmount]').val(),
+                //Placeholder for authentication
+                "UserID" : 1
+             };
+            
+            var TicketPairs = new Array();
+            $("#tblTicket TBODY TR").each(function () {
+                var row = $(this);
+                TicketPairs.push({
+                    "PairId": row.find("TD").eq(0).html().trim(),
+                    "Type": row.find("TD").eq(2).html().split(" -")[0]
+                });
+            });
+
+            ticketData.TicketPairs = TicketPairs;
+
+            //Send the JSON array to Controller using AJAX.
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("InsertTicket", "Home")",
+                data: JSON.stringify(ticketData),
+                contentType: "application/json; charset=utf-8",
+                dataType: "text/json",
+                success: function (response) {
+                    alert(response + "Listić uspješno uplaćen.");
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
+        });
+
     </script>
 }
 

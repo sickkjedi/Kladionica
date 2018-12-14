@@ -30,7 +30,6 @@ namespace Kladionica.DAL
             {
                 new User
                 {
-                    UserId = 1,
                     FirstName = "Anton",
                     LastName = "Šustić",
                     Email = "protos3@gmail.com",
@@ -47,7 +46,6 @@ namespace Kladionica.DAL
             {
                 new Pair
                 {
-                    PairId = 1,
                     Pair1 = "Hajduk",
                     Pair2 = "Dinamo",
                     Type1 = 3.42m,
@@ -58,7 +56,6 @@ namespace Kladionica.DAL
                 },
                 new Pair
                 {
-                    PairId = 2,
                     Pair1 = "Real Madrid",
                     Pair2 = "Barcelona",
                     Type1 = 12.42m,
@@ -69,7 +66,6 @@ namespace Kladionica.DAL
                 },
                 new Pair
                 {
-                    PairId = 3,
                     Pair1 = "PSG",
                     Pair2 = "Liverpool",
                     Type1 = 1.72m,
@@ -80,7 +76,6 @@ namespace Kladionica.DAL
                 },
                 new Pair
                 {
-                    PairId = 4,
                     Pair1 = "AC Milan",
                     Pair2 = "Bayern Munich",
                     Type1 = 1.42m,
@@ -91,7 +86,6 @@ namespace Kladionica.DAL
                 },
                 new Pair
                 {
-                    PairId = 48,
                     Pair1 = "Hrvatska",
                     Pair2 = "Danska",
                     Type1 = 1.92m,
@@ -105,8 +99,6 @@ namespace Kladionica.DAL
             pairs.ForEach(p => context.Pairs.Add(p));
             context.SaveChanges();
 
-
-          
         }
     }
 }

@@ -20,8 +20,7 @@ namespace Kladionica.Models
         public int UserID { get; set; } //FK
         public virtual User User { get; set; }
 
-        public virtual ICollection<TicketPair> TicketPairs { get; set; } //navigacijski property
-        //svaki ticket sadrzi vise parova
+        public virtual ICollection<TicketPair> TicketPairs { get; set; } //Navigation property
 
         public decimal GetTotalQuota()
         {
