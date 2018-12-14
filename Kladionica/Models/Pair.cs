@@ -35,13 +35,13 @@ namespace Kladionica.Models
 
         public virtual ICollection<TicketPair> TicketPairs { get; set; } //navigation property
 
-        public decimal GetTypeQuota(char Type)
+        public decimal GetTypeQuota(string Type)
         {
             switch (Type)
             {
-                case '1': return Type1;
-                case '2': return Type2;
-                case 'x': return Typex;
+                case "1": return Type1;
+                case "2": return Type2;
+                case "x": return Typex;
                 default: return 0;
             }
         }

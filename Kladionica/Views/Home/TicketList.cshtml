@@ -1,0 +1,75 @@
+﻿@model IEnumerable<Kladionica.Models.Ticket>
+@{
+    ViewBag.Title = "TicketList";
+}
+
+<h2>Uplaćeni listići</h2>
+
+<div id="accordion">
+    @foreach (var ticket in Model)
+    {
+        string cardId = "heading" + ticket.TicketId;
+        string collapseId = "collapse" + ticket.TicketId;
+        <div class="card">
+            <div class="card-header" id="@cardId">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#@collapseId" aria-expanded="false" aria-controls="@collapseId">
+                        Listic #@ticket.TicketId - @ticket.Date
+                    </button>
+                </h5>
+            </div>
+
+            <div id="@collapseId" class="collapse" aria-labelledby="@cardId" data-parent="#accordion">
+                <div class="ticket-body">
+                    <table id="ticketTbl" class="table table-hover">
+
+                        <tbody>
+                            @foreach (var pair in ticket.TicketPairs)
+                            {
+                                <tr>
+                                    <td>
+                                        @pair.PairID
+                                    </td>
+                                    <td>
+                                        @pair.Pair.FullPair
+                                    </td>
+                                    <td>
+                                        @pair.Type - @String.Format("{0:f2}", pair.Pair.GetTypeQuota(pair.Type))
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+
+                        <tfoot>
+                            <tr>
+                                <td>
+                                    <p>Ulog:</p>
+                                </td>
+                                <td>
+                                    @String.Format("{0:c}", ticket.BetAmount)
+                                </td>
+                                <td>
+                                    <p>Kvota:</p>
+                                </td>
+                                <td>
+                                    @String.Format("{0:f2}", ticket.GetTotalQuota())
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <p>Dobitak:</p>
+                                </td>
+                                <td>
+                                    @String.Format("{0:c}", ticket.BetAmount * ticket.GetTotalQuota())
+                                </td>
+                            </tr>
+                        </tfoot>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>

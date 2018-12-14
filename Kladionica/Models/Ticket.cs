@@ -27,7 +27,7 @@ namespace Kladionica.Models
             decimal mul = 1;
             foreach(TicketPair ticketPair in TicketPairs)
             {
-                char Type = ticketPair.Type;
+                string Type = ticketPair.Type;
                 mul *= ticketPair.Pair.GetTypeQuota(Type);
             }
 

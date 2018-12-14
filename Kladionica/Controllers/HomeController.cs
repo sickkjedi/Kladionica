@@ -37,29 +37,36 @@ namespace Kladionica.Controllers
         }
 
         [HttpPost]
-        public ActionResult InsertTicket(Models.Ticket newTicket)
+        public JsonResult InsertTicket(Models.Ticket newTicket)
         {
+            //User auth placeholder
+            Models.User currUser = db.Users.Find(1);
             if (newTicket != null)
             {
+                if(currUser.Balance < newTicket.BetAmount)
+                {
+                    return Json(new { IsCreated = false, Message = "Ticket not created; Not enough funds." });
+                }
+                db.Users.Find(1).Balance = currUser.Balance - newTicket.BetAmount;
                 db.Tickets.Add(newTicket);
+                db.SaveChanges();
+                return Json(new { IsCreated = true, Message = "Ticket successfuly created." });
             }
 
-            return Json(db.SaveChanges());
+            return Json(new { IsCreated = false, Message = "Ticket not created; New ticket is null." });
         }
 
 
-        public ActionResult About()
+        public ActionResult TicketList()
         {
-            ViewBag.Message = "Your application description page.";
 
-            return View();
+            return View(db.Tickets.ToList());
         }
 
-        public ActionResult Contact()
+        public ActionResult TransactionList()
         {
-            ViewBag.Message = "Your contact page.";
 
-            return View();
+            return View(db.Transactions.ToList());
         }
     }
 }

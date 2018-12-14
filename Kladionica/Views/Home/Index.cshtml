@@ -152,7 +152,12 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "text/json",
                 success: function (response) {
-                    alert(response + "Listić uspješno uplaćen.");
+                    if (!response.IsCreated) {
+                        alert(response.Message);
+                    }
+                    else if (response.IsCreated) {
+                        alert(response.Message + "Listić uspješno uplaćen.");
+                    }
                 },
                 failure: function (response) {
                     alert(response);
