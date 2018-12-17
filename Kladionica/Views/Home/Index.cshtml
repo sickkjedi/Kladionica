@@ -1,29 +1,22 @@
-﻿@model IEnumerable<Kladionica.Models.Category>
-@{
+﻿@{
     ViewBag.Title = "Kladionica";
 }
 
 
 <div class="row">
-    <div class="col-md-2" >
-        <div id="sports-list" class="btn-group-vertical btn-group-toggle" data-toggle="buttons">
-
-            @foreach (var cat in Model)
-            {
-                <label class="btn btn-outline-primary">
-                    <input type="radio" name="sport-select" value="@cat.Name"> @cat.Name
-                </label>
-            }
-        </div>
+    <div class="col-md-2">
+        @{
+            Html.RenderAction("SportSelect");
+        }
     </div>
 
-    <div class="col-md-7" id="pairs-table">
+    <div class="col-md-6" id="pairs-table">
         @{
             Html.RenderAction("PairsList", new { sportName = ""});
         }
     </div>
 
-    <div class="col-md-3" id="ticket">
+    <div class="col-md-4" id="ticket">
         @{
             Html.RenderAction("Ticket");
         }
@@ -39,7 +32,7 @@
         $(document).ready(function () {
             var url = '@Url.Action("PairsList", "Home")';
             //Update pairs table on sport category select
-            $('input[name=sport-select]').change(function() {
+            $('input[name=sport-select]').change(function () {
                 var keyWord = $(this).val();
                 $('#pairs-table').load(url, { sportName: keyWord });
             });
@@ -51,7 +44,6 @@
                 $("#winAmount").html("<strong> " + amount.toString() + " KN" + "</strong>")
             });
         });
-
 
         //Remove an item from the ticket table
         function Remove(button) {
@@ -157,18 +149,17 @@
                 data: JSON.stringify(ticketData),
                 contentType: "application/json; charset=utf-8",
                 dataType: "text/json",
-                success: function (response) {
-                    if (!response.IsCreated) {
-                        alert(response.Message);
+                error: function (response) {
+                    var jsonResponse = JSON.parse(response.responseText);
+                    alert(jsonResponse.message);
+
+                    if (jsonResponse.success) {
+                        debugger;
+                        location.reload();
                     }
-                    else if (response.IsCreated) {
-                        alert(response.Message + "Listić uspješno uplaćen.");
-                    }
-                },
-                failure: function (response) {
-                    alert(response);
                 }
             });
+
         });
 
     </script>

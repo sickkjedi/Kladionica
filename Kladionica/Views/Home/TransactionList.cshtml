@@ -1,7 +1,10 @@
 ﻿@model IEnumerable<Kladionica.Models.Transaction>
+@{
+    ViewBag.Title = "Transakcije";
+}
 
 <div id="transaction-list">
-    <table class="table">
+    <table class="table table-responsive-sm">
         <thead>
             <tr>
                 <td>
@@ -18,17 +21,34 @@
         <tbody>
             @foreach (var trans in Model)
             {
-                <tr>
-                    <td>
-                        @trans.TransactionId
-                    </td>
-                    <td>
-                        @trans.Amount
-                    </td>
-                    <td>
-                        @trans.Date
-                    </td>
-                </tr>
+                if (trans.Amount < 0)
+                {
+                    <tr class="table-danger">
+                        <td>
+                            #@trans.TransactionId
+                        </td>
+                        <td>
+                            @trans.Amount
+                        </td>
+                        <td>
+                            @trans.Date.ToString("dd/MM/yyyy hh:mm")
+                        </td>
+                    </tr>
+                }
+                else if (trans.Amount > 0)
+                {
+                    <tr class="table-success">
+                        <td>
+                            #@trans.TransactionId
+                        </td>
+                        <td>
+                            <strong>@trans.Amount</strong>
+                        </td>
+                        <td>
+                            @trans.Date.ToString("dd/MM/yyyy hh:mm")
+                        </td>
+                    </tr>
+                }
             }
 
         </tbody>
@@ -40,8 +60,11 @@
     $(document).ready(function () {
         var url = '@Url.Action("TransactionList", "Home")';
         $("body").on("click", "#btnDeposit", function () {
-            var amount = $('input[id=depositAmount]').val();
+            var amount = $('input[id=depositAmount]').val().replace('.', ',');
+            $('input[id=depositAmount]').val(0);
+            debugger;
             $('#transaction-list').load(url, { amount: amount });
+            location.reload();
         });
     });
 

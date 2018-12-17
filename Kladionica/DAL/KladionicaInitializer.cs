@@ -42,6 +42,19 @@ namespace Kladionica.DAL
             users.ForEach(u => context.Users.Add(u));
             context.SaveChanges();
 
+            var transactions = new List<Transaction>
+            {
+                new Transaction
+                {
+                    Amount = 50.00m,
+                    Success = true,
+                    UserID = 1
+                }
+            };
+
+            transactions.ForEach(t => context.Transactions.Add(t));
+            context.SaveChanges();
+
             var pairs = new List<Pair>
             {
                 new Pair

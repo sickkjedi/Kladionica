@@ -28,5 +28,7 @@ textarea {
     padding-top: 50px;
 }
 
-
+.container {
+    max-width: 1350px;
+}
 

@@ -14,7 +14,12 @@ namespace Kladionica.Controllers
 
         public ActionResult Index() 
         {
-            return View(db.Categories.ToList());
+            return View();
+        }
+
+        public ActionResult SportSelect()
+        {
+            return PartialView("_SportSelect" ,db.Categories.ToList());
         }
 
         public ActionResult PairsList(string sportName)
@@ -41,20 +46,20 @@ namespace Kladionica.Controllers
         {
             //User auth placeholder
             Models.User currUser = db.Users.Find(1);
-            if (newTicket != null)
+            if (newTicket.TicketPairs != null)
             {
                 if(AddTransaction(currUser.UserId, -1.00m * newTicket.BetAmount))
                 {
                     db.Tickets.Add(newTicket);
                     db.SaveChanges();
 
-                    return Json(new { IsCreated = true, Message = "Ticket successfuly created." });
+                    return Json(new { success = true, message = "Listić uspješno uplaćen." });
                 }
 
-                return Json(new { IsCreated = false, Message = "Ticket not created; Not enough funds." });
+                return Json(new { success = false, message = "Listić nije moguće uplatiti, nedovoljan iznos na računu." });
             }
 
-            return Json(new { IsCreated = false, Message = "Ticket not created; New ticket is null." });
+            return Json(new { success = false, message = "Greška - listić prazan." });
         }
 
 
@@ -64,19 +69,29 @@ namespace Kladionica.Controllers
             return View(db.Tickets.ToList());
         }
 
-        public ActionResult TransactionList(decimal? amount)
+        public ActionResult TransactionList(string amount)
         {
-            if(amount != null)
-            {
-                AddTransaction(1, (decimal)amount);
-            }
             List<Models.Transaction> currUserTransactions = new List<Models.Transaction>();
             currUserTransactions = db.Transactions.Where(t => t.UserID.Equals(1)).ToList();
 
             //Current user balance -- placeholder for authentication
             ViewBag.Amount = db.Users.Find(1).Balance;
 
+            //Controller confusing decimal with "." sent sent by jQuery and ","??? -- using string and parse decimal
+            if (amount != null && amount != "0")
+            {
+                decimal amountd = decimal.Parse((string)amount);
+                AddTransaction(1, amountd);
+                return PartialView(currUserTransactions);
+            }
+
+
             return View(currUserTransactions);
+        }
+
+        public ActionResult Contact()
+        {
+            return View();
         }
 
         private bool AddTransaction(int userID, decimal amount)

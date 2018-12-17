@@ -1,0 +1,11 @@
+﻿@model IEnumerable<Kladionica.Models.Category>
+
+<div id="sports-list" class="btn-group-vertical btn-group-toggle" data-toggle="buttons">
+
+    @foreach (var cat in Model)
+    {
+        <label class="btn btn-outline-primary">
+            <input type="radio" name="sport-select" value="@cat.Name"> @cat.Name
+        </label>
+    }
+</div>
