@@ -1,14 +1,18 @@
 ﻿@model IEnumerable<Kladionica.Models.Transaction>
 
-<h2>TransactionList</h2>
-
 <div id="transaction-list">
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">#</th>
-                <th scope="col">Amount</th>
-                <th scope="col">Date</th>
+                <td>
+                    <h5> Raspoloživi iznos:  @ViewBag.Amount KN</h5>
+                </td>
+                <td>
+                    <strong>Uplati iznos:</strong>
+                    <input type="number" id="depositAmount" step="0.01" min="0" placeholder="KN" />
+                    <input class="btn btn-success" type="button" id="btnDeposit" value="Uplati" />
+                </td>
+                <td></td>
             </tr>
         </thead>
         <tbody>
@@ -30,4 +34,17 @@
         </tbody>
     </table>
 </div>
+
+@section Scripts{
+    <script type="text/javascript">
+    $(document).ready(function () {
+        var url = '@Url.Action("TransactionList", "Home")';
+        $("body").on("click", "#btnDeposit", function () {
+            var amount = $('input[id=depositAmount]').val();
+            $('#transaction-list').load(url, { amount: amount });
+        });
+    });
+
+    </script>
+}
 

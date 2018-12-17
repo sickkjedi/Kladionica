@@ -58,6 +58,9 @@
             //Determine the reference of the Row using the Button.
             var row = $(button).closest("tr");
             var name = $("td", row).eq(1).html();
+            var id = $("td", row).eq(0).html().trim();
+            var type = $("td", row).eq(2).html().split(" -")[0];
+
             if (confirm("Da li želite ukloniti: " + name)) {
                 //Get the reference of the Table.
                 var table = $("#tblTicket")[0];
@@ -67,6 +70,9 @@
                 var quota = $("td", row).eq(2).html().split("- ")[1];
                 
                 UpdateTotalQuota(parseFloat(quota.replace(',', '.')) * -1.0);
+
+                //Untoggle pair type button from pairs table
+                $('#pairs-table').find("#" + id).find("[value=" + type + "]").button("toggle");
             }
         };
 
