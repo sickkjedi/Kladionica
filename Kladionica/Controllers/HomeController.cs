@@ -14,7 +14,7 @@ namespace Kladionica.Controllers
 
         public ActionResult Index() 
         {
-            return View();
+            return View(db.Pairs.ToList());
         }
 
         public ActionResult SportSelect()
@@ -27,6 +27,7 @@ namespace Kladionica.Controllers
             List<Models.Pair> selectedPairs = new List<Models.Pair>();
             selectedPairs = db.Pairs.ToList();
 
+            //Filter pairs by category
             if (!String.IsNullOrEmpty(sportName))
             {
                 selectedPairs = db.Pairs.Where(p => p.Category.Name.Contains(sportName)).ToList();
@@ -48,6 +49,7 @@ namespace Kladionica.Controllers
             Models.User currUser = db.Users.Find(1);
             if (newTicket.TicketPairs != null)
             {
+                //Add new transaction log with spent amount
                 if(AddTransaction(currUser.UserId, -1.00m * newTicket.BetAmount))
                 {
                     db.Tickets.Add(newTicket);
@@ -77,7 +79,7 @@ namespace Kladionica.Controllers
             //Current user balance -- placeholder for authentication
             ViewBag.Amount = db.Users.Find(1).Balance;
 
-            //Controller confusing decimal with "." sent sent by jQuery and ","??? -- using string and parse decimal
+            //Controller confusing decimal point with "," sent sent by jQuery??? -- using string and parse decimal
             if (amount != null && amount != "0")
             {
                 decimal amountd = decimal.Parse((string)amount);
@@ -98,6 +100,7 @@ namespace Kladionica.Controllers
         {
             Models.Transaction transaction = new Models.Transaction();
 
+            //If enough available funds create a new transaction
             if (db.Users.Find(userID).Balance + amount >= 0) { 
 
                 db.Users.Find(userID).Balance += amount;

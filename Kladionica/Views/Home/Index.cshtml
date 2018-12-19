@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<Kladionica.Models.Pair>
+@{
     ViewBag.Title = "Kladionica";
 }
 
@@ -12,10 +13,12 @@
 
     <div class="col-md-6" id="pairs-table">
         @{
-            Html.RenderAction("PairsList", new { sportName = ""});
+            Html.RenderAction("PairsList", new { sportName = "" });
         }
     </div>
-
+    <div id="dialog" title="Ticket dialog">
+        
+    </div>
     <div class="col-md-4" id="ticket">
         @{
             Html.RenderAction("Ticket");
@@ -25,7 +28,13 @@
 </div>
 
 @section Scripts{
-    <script type="text/javascript">
+<script type="text/javascript">
+        var bonus = {
+            "bonus5": false,
+            "applied5": false,
+            "bonus10": false,
+            "applied10": false
+        };
         var totalQuota = 1.0;
         var amount = 0;
 
@@ -53,19 +62,18 @@
             var id = $("td", row).eq(0).html().trim();
             var type = $("td", row).eq(2).html().split(" -")[0];
 
-            if (confirm("Da li želite ukloniti: " + name)) {
-                //Get the reference of the Table.
-                var table = $("#tblTicket")[0];
+            //Get the reference of the Table.
+            var table = $("#tblTicket")[0];
 
-                //Delete the Table row using it's Index.
-                table.deleteRow(row[0].rowIndex);
-                var quota = $("td", row).eq(2).html().split("- ")[1];
-                
-                UpdateTotalQuota(parseFloat(quota.replace(',', '.')) * -1.0);
+            //Delete the Table row using it's Index.
+            table.deleteRow(row[0].rowIndex);
+            var quota = $("td", row).eq(2).html().split("- ")[1];
 
-                //Untoggle pair type button from pairs table
-                $('#pairs-table').find("#" + id).find("[value=" + type + "]").button("toggle");
-            }
+            UpdateTotalQuota(parseFloat(quota.replace(',', '.')) * -1.0);
+
+            //Untoggle pair type button from pairs table
+            $('#pairs-table').find("#" + id).find("[value=" + type + "]").button("toggle");
+
         };
 
         //Insert current total qouta
@@ -76,10 +84,81 @@
             else if (quota > 0) {
                 totalQuota = (totalQuota * quota).toFixed(2);
             }
+            if (bonus.bonus5 && !bonus.applied5) {
+                debugger;
+                totalQuota = (parseFloat(totalQuota) + 5.0).toFixed(2);
+                debugger;
+                bonus.applied5 = true;
+            }
+            if (bonus.bonus10 && !bonus.applied10) {
+                totalQuota = (parseFloat(totalQuota) + 10.0).toFixed(2);
+                bonus.applied10 = true;
+            }
             $("#total-qouta").html("<strong> " + totalQuota.toString() + "</strong>")
         };
 
+        //Return array of all pairs from the current ticket table
+        function GetTicketPairs() {
+            var TicketPairs = new Array();
+            $("#tblTicket TBODY TR").each(function () {
+                var row = $(this);
+                TicketPairs.push({
+                    "PairId": row.find("TD").eq(0).html().trim(),
+                    "Type": row.find("TD").eq(2).html().split(" -")[0]
+                });
+            });
 
+            return TicketPairs;
+        };
+
+
+        function GetBonus() {
+            var categories = new Array();
+
+            //Load all pair categories from current ticket
+            $("#tblTicket TBODY TR").each(function () {
+                var row = $(this);
+                categories.push(row["0"].dataset.info);
+            });
+
+            //Count the most occured category and how many different
+            var counts = {}, max = 0, res, countsDiff = 0;
+            for (var v in categories) {
+                if (counts[categories[v]] == null) {
+                    counts[categories[v]] = 1;
+                    countsDiff += 1;
+                }
+                else {
+                    counts[categories[v]] += 1;
+                }
+                
+                if (counts[categories[v]] > max) {
+                    max = counts[categories[v]];
+                    res = categories[v];
+                }
+            }
+            
+
+            //If any category appears 2 times show bonus5 popup
+            if (counts[res] == 2 && !bonus.bonus5) {
+                alert("Ako dodate još 1 par iz kategorije " + res + " ostvarite bonus od +5 na ukupnu kvotu!");
+            }
+            else if (counts[res] >= 3 && !bonus.applied5) {
+                bonus.bonus5 = true;
+                alert("Bonus od 3 ista sporta ostvaren! Dobili ste +5 na ukupnu kvotu.");
+            }
+
+            //If 3 or more different sports show bonus10
+            if (countsDiff >= 3 && countsDiff < 7 && !bonus.bonus10) {
+                alert("Dodajte još " + (7-countsDiff) + " različitih sportova da ostvarite bonus od +10 na kvotu!");
+            }
+            else if (countsDiff >= 7 && !bonus.applied10) {
+                bonus.bonus10 = true;
+                alert("Bonus od 7 različitih sportova ostvaren! Dobili ste +10 na ukupnu kvotu.");
+            }
+        };
+
+        //Add pairs to ticket table on type click
         $("body").on("click", "#btnAdd", function () {
             //Reference the entire row of the clicked button
             var $btnRow = $(this).closest("tr");
@@ -87,11 +166,11 @@
             //Get bet type and quota from the button
             var betType = $(this).val();
             var quota = $(this).attr('title');
-            UpdateTotalQuota(parseFloat(quota.replace(',', '.')));
-
+            
             //Get Pair ID and Full Name string from the button table row
             var pairId = $btnRow.find("td:nth-child(1)");
             var pairName = $btnRow.find("td:nth-child(2)");
+            var pairCategory = $btnRow["0"].dataset.info;
 
             //Get the reference of the Table's TBODY element
             var tBody = $("#tblTicket > TBODY")[0];
@@ -101,11 +180,12 @@
 
             //Add Pair ID cell
             var cell = $(row.insertCell(-1));
-            cell.html(pairId.text());
+            cell.html(pairId.text().trim());
 
             //Add Pair name cell
             cell = $(row.insertCell(-1));
-            cell.html(pairName.text());
+            cell.html(pairName.text().trim());
+            row.setAttribute("data-info", pairCategory);
 
             //Add Type and Quota cell
             cell = $(row.insertCell(-1));
@@ -120,27 +200,22 @@
             btnRemove.val("X");
             cell.append(btnRemove);
 
+            GetBonus();
+            UpdateTotalQuota(parseFloat(quota.replace(',', '.')));
         });
 
 
         //Send ticket data
-         $("body").on("click", "#btnSubmit", function () {
+        $("body").on("click", "#btnSubmit", function () {
             var ticketData = {
                 "BetAmount": +$('input[id=betAmount]').val(),
                 //Placeholder for authentication
-                "UserID" : 1
+                "UserID": 1,
+                "BonusQuota5": bonus.bonus5,
+                "BonusQuota10": bonus.bonus10
              };
-            
-            var TicketPairs = new Array();
-            $("#tblTicket TBODY TR").each(function () {
-                var row = $(this);
-                TicketPairs.push({
-                    "PairId": row.find("TD").eq(0).html().trim(),
-                    "Type": row.find("TD").eq(2).html().split(" -")[0]
-                });
-            });
 
-            ticketData.TicketPairs = TicketPairs;
+            ticketData.TicketPairs = GetTicketPairs();
 
             //Send the JSON array to Controller using AJAX.
             $.ajax({
@@ -162,6 +237,6 @@
 
         });
 
-    </script>
+</script>
 }
 

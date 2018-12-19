@@ -13,7 +13,7 @@
     <tbody>
         @foreach (var pair in Model)
         {
-            <tr id="@pair.PairId">
+            <tr id="@pair.PairId" data-info="@pair.Category.Name">
                 <td>
                     @pair.PairId
                 </td>

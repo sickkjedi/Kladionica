@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.27130.2024
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kladionica", "Kladionica\Kladionica.csproj", "{EE4F1385-790D-49DB-AAFD-0284484C1D1E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kladionica.Tests", "Kladionica.Tests\Kladionica.Tests.csproj", "{684D1B4C-C747-46F1-9D47-E98B1662072E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{EE4F1385-790D-49DB-AAFD-0284484C1D1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE4F1385-790D-49DB-AAFD-0284484C1D1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE4F1385-790D-49DB-AAFD-0284484C1D1E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{684D1B4C-C747-46F1-9D47-E98B1662072E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{684D1B4C-C747-46F1-9D47-E98B1662072E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{684D1B4C-C747-46F1-9D47-E98B1662072E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{684D1B4C-C747-46F1-9D47-E98B1662072E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

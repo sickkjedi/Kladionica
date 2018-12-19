@@ -31,8 +31,11 @@
                                     <td>
                                         @pair.Pair.FullPair
                                     </td>
-                                    <td colspan="2">
+                                    <td>
                                         @pair.Type - @String.Format("{0:f2}", pair.Pair.GetTypeQuota(pair.Type))
+                                    </td>
+                                    <td>
+                                        @pair.Pair.StartDate
                                     </td>
                                 </tr>
                             }
@@ -58,8 +61,29 @@
                                 <td>
                                     <strong>Dobitak:</strong>
                                 </td>
-                                <td colspan="3">
+                                <td>
                                     <p style="color:green">@String.Format("{0:c}", ticket.BetAmount * ticket.GetTotalQuota())</p>
+                                </td>
+                                <td>
+                                    @if (@ticket.BonusQuota5)
+                                    {
+                                        <p style="color:green">Bonus 3 para iz kategorije</p>
+                                    }
+                                    else if (!@ticket.BonusQuota5)
+                                    {
+                                        <p style="color:red">Bonus 3 para iz kategorije</p>
+                                    }
+
+                                </td>
+                                <td>
+                                    @if (@ticket.BonusQuota10)
+                                    {
+                                        <p style="color:green">Bonus svi sportovi</p>
+                                    }
+                                    else if (!@ticket.BonusQuota10)
+                                    {
+                                        <p style="color:red">Bonus svi sportovi</p>
+                                    }
                                 </td>
                             </tr>
                         </tfoot>
