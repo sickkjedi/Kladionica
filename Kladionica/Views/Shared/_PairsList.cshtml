@@ -31,9 +31,12 @@
                         <button type="button" class="btn btn-outline-danger" id="btnAdd" value="2" data-toggle="tooltip" data-placement="top" title="@pair.Type2">
                             2
                         </button>
-                        <button type="button" class="btn btn-outline-danger" id="btnAdd" value="x" data-toggle="tooltip" data-placement="right" title="@pair.Typex">
-                            x
-                        </button>
+                        @if (pair.Typex != 0m)
+                        {
+                            <button type="button" class="btn btn-outline-danger" id="btnAdd" value="x" data-toggle="tooltip" data-placement="right" title="@pair.Typex">
+                                x
+                            </button>
+                        }
                     </div>
                 </td>
             </tr>

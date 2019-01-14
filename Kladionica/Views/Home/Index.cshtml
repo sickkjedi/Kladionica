@@ -49,10 +49,15 @@
             //Update total winnings on bet amount field change
             $("input[id=betAmount]").change(function () {
                 amount = $(this).val();
-                amount = (amount * totalQuota).toFixed(2);
-                $("#winAmount").html("<strong> " + amount.toString() + " KN" + "</strong>");
+                UpdateWinnings();
             });
         });
+
+        //Update win amount field
+        function UpdateWinnings() {
+            amount = (amount * totalQuota).toFixed(2);
+            $("#winAmount").html("<strong> " + amount.toString() + " KN" + "</strong>");
+        };
 
         //Remove an item from the ticket table
         function Remove(button) {
@@ -92,6 +97,7 @@
                 bonus.applied10 = true;
             }
             $("#total-quota").html("<strong> " + totalQuota.toString() + "</strong>");
+            UpdateWinnings();
         };
 
         //Return array of all pairs from the current ticket table
@@ -168,6 +174,17 @@
             var pairId = $btnRow.find("td:nth-child(1)");
             var pairName = $btnRow.find("td:nth-child(2)");
             var pairCategory = $btnRow["0"].dataset.info;
+
+            //Check if selected pair is already in current ticket
+            var isChecked = false;
+            var ticketPairs = GetTicketPairs();
+            ticketPairs.forEach(function (pair) {
+                if (pair.PairId === pairId.text().trim()) {
+                    alert("Par #" + pairId.text().trim() + " je već odabran.");
+                    isChecked = true;
+                }
+            });
+            if (isChecked) return false;
 
             //Get the reference of the Table's TBODY element
             var tBody = $("#tblTicket > TBODY")[0];

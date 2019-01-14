@@ -5,7 +5,7 @@ using Kladionica.Models;
 
 namespace Kladionica.DAL
 {
-    public class KladionicaInitializer : DropCreateDatabaseAlways<KladionicaContext>
+    public class KladionicaInitializer : DropCreateDatabaseIfModelChanges<KladionicaContext>
     {
         protected override void Seed(KladionicaContext context)
         {

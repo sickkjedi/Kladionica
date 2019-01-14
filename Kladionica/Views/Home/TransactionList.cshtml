@@ -60,11 +60,17 @@
     $(document).ready(function () {
         var url = '@Url.Action("TransactionList", "Home")';
         $("body").on("click", "#btnDeposit", function () {
-            var amount = $("input[id=depositAmount]").val().replace('.', ',');
+            var amount = $("input[id=depositAmount]").val();
+
+            //Check if positive amount
+            if (amount >= 0) {
+                amount = amount.replace('.', ',');
+                $("#transaction-list").load(url, { amount: amount });
+                location.reload();
+            }
+            else alert("Nemoguće uplatiti negativan iznos.");
+
             $("input[id=depositAmount]").val(0);
-            debugger;
-            $("#transaction-list").load(url, { amount: amount });
-            location.reload();
         });
     });
 

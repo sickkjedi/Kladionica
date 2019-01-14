@@ -44,8 +44,9 @@ namespace Kladionica.Controllers
             var currUser = _db.Users.Find(1);
             if (newTicket.TicketPairs != null)
             {
+                if(newTicket.BetAmount <= 0) return Json(new { success = false, message = $"Neispravan ulog: {newTicket.BetAmount}KN - Unesite pozitivan iznos." });
                 //Add new transaction log with spent amount
-                if(currUser != null && AddTransaction(currUser.UserId, -1.00m * newTicket.BetAmount))
+                if (currUser != null && AddTransaction(currUser.UserId, -1.00m * newTicket.BetAmount))
                 {
                     _db.Tickets.Add(newTicket);
                     _db.SaveChanges();
