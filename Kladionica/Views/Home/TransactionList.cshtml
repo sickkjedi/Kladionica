@@ -60,10 +60,10 @@
     $(document).ready(function () {
         var url = '@Url.Action("TransactionList", "Home")';
         $("body").on("click", "#btnDeposit", function () {
-            var amount = $('input[id=depositAmount]').val().replace('.', ',');
-            $('input[id=depositAmount]').val(0);
+            var amount = $("input[id=depositAmount]").val().replace('.', ',');
+            $("input[id=depositAmount]").val(0);
             debugger;
-            $('#transaction-list').load(url, { amount: amount });
+            $("#transaction-list").load(url, { amount: amount });
             location.reload();
         });
     });

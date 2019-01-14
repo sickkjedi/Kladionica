@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.ComponentModel.DataAnnotations;
 
 namespace Kladionica.Models
@@ -10,13 +7,13 @@ namespace Kladionica.Models
     {
         [Key]
         public int TransactionId { get; set; }
-        public DateTime Date { get; set; } = System.DateTime.Now;
+        public DateTime Date { get; } = DateTime.Now;
         [Required(ErrorMessage = "Amount is required.")]
         public decimal Amount { get; set; }
         public bool Success { get; set; }
 
-        public int UserID { get; set; } //FK
-        public virtual User User { get; set; }
+        public int UserId { get; set; } //FK
+        public User User { get; set; }
 
     }
 }

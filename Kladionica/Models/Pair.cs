@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.ComponentModel.DataAnnotations;
 
 namespace Kladionica.Models
@@ -14,13 +12,8 @@ namespace Kladionica.Models
         public string Pair1 { get; set; }
         [Required, StringLength(50, MinimumLength = 2)]
         public string Pair2 { get; set; }
-        public string FullPair
-        {
-            get
-            {
-                return Pair1 + " - " + Pair2;
-            }
-        }
+        public string FullPair => Pair1 + " - " + Pair2;
+
         [Required]
         public decimal Type1 { get; set; }
         [Required]
@@ -30,10 +23,10 @@ namespace Kladionica.Models
         public DateTime StartDate { get; set; }
         public char Result { get; set; } = 'N';
 
-        public int CategoryID { get; set; } //FK
+        public int CategoryId { get; set; } //FK
         public virtual Category Category { get; set; }
 
-        public virtual ICollection<TicketPair> TicketPairs { get; set; } //navigation property
+        public ICollection<TicketPair> TicketPairs { get; set; } //navigation property
 
         public decimal GetTypeQuota(string Type)
         {

@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Data.Entity;
-using System.IO;
 using Kladionica.Models;
 
 namespace Kladionica.DAL
@@ -14,13 +11,13 @@ namespace Kladionica.DAL
         {
             var categories = new List<Category>
             {
-                new Category{CategoryId = 1,Name = "Nogomet"},
-                new Category{CategoryId = 2,Name = "Tenis"},
-                new Category{CategoryId = 3,Name = "Košarka"},
-                new Category{CategoryId = 4,Name = "Rukomet"},
-                new Category{CategoryId = 5,Name = "Hokej"},
-                new Category{CategoryId = 6,Name = "Vaterpolo"},
-                new Category{CategoryId = 7,Name = "Rugby"}
+                new Category{CategoryId = 1, Name = "Nogomet"},
+                new Category{CategoryId = 2, Name = "Tenis"},
+                new Category{CategoryId = 3, Name = "Košarka"},
+                new Category{CategoryId = 4, Name = "Rukomet"},
+                new Category{CategoryId = 5, Name = "Hokej"},
+                new Category{CategoryId = 6, Name = "Vaterpolo"},
+                new Category{CategoryId = 7, Name = "Rugby"}
             };
 
             categories.ForEach(c => context.Categories.Add(c));
@@ -48,7 +45,7 @@ namespace Kladionica.DAL
                 {
                     Amount = 50.00m,
                     Success = true,
-                    UserID = 1
+                    UserId = 1
                 }
             };
 
@@ -65,7 +62,7 @@ namespace Kladionica.DAL
                     Type2 = 1.52m,
                     Typex = 2.89m,
                     StartDate = new DateTime(2018,12,5,12,0,0),
-                    CategoryID = 1
+                    CategoryId = 1
                 },
                 new Pair
                 {
@@ -75,7 +72,7 @@ namespace Kladionica.DAL
                     Type2 = 1.52m,
                     Typex = 7.89m,
                     StartDate = new DateTime(2018,12,5,12,0,0),
-                    CategoryID = 1
+                    CategoryId = 1
                 },
                 new Pair
                 {
@@ -85,7 +82,7 @@ namespace Kladionica.DAL
                     Type2 = 4.22m,
                     Typex = 8.89m,
                     StartDate = new DateTime(2018,12,5,12,0,0),
-                    CategoryID = 1
+                    CategoryId = 1
                 },
                 new Pair
                 {
@@ -95,7 +92,7 @@ namespace Kladionica.DAL
                     Type2 = 2.32m,
                     Typex = 1.89m,
                     StartDate = new DateTime(2018,12,5,12,0,0),
-                    CategoryID = 1
+                    CategoryId = 1
                 },
                 new Pair
                 {
@@ -105,7 +102,7 @@ namespace Kladionica.DAL
                     Type2 = 3.77m,
                     Typex = 7.89m,
                     StartDate = new DateTime(2018,12,5,12,0,0),
-                    CategoryID = 4
+                    CategoryId = 4
                 },
                 new Pair
                 {
@@ -115,7 +112,7 @@ namespace Kladionica.DAL
                     Type2 = 3.77m,
                     Typex = 7.89m,
                     StartDate = new DateTime(2018,12,5,12,0,0),
-                    CategoryID = 4
+                    CategoryId = 4
                 },
                 new Pair
                 {
@@ -125,7 +122,7 @@ namespace Kladionica.DAL
                     Type2 = 3.77m,
                     Typex = 7.89m,
                     StartDate = new DateTime(2018,12,5,12,0,0),
-                    CategoryID = 4
+                    CategoryId = 4
                 },
                 new Pair
                 {
@@ -133,9 +130,8 @@ namespace Kladionica.DAL
                     Pair2 = "Čilić",
                     Type1 = 5.92m,
                     Type2 = 9.77m,
-                    Typex = 1.89m,
                     StartDate = new DateTime(2018,12,5,12,0,0),
-                    CategoryID = 2
+                    CategoryId = 2
                 },
                 new Pair
                 {
@@ -143,9 +139,8 @@ namespace Kladionica.DAL
                     Pair2 = "Nadal",
                     Type1 = 1.92m,
                     Type2 = 4.77m,
-                    Typex = 2.89m,
                     StartDate = new DateTime(2018,12,5,12,0,0),
-                    CategoryID = 2
+                    CategoryId = 2
                 },
                 new Pair
                 {
@@ -155,7 +150,7 @@ namespace Kladionica.DAL
                     Type2 = 2.77m,
                     Typex = 3.89m,
                     StartDate = new DateTime(2018,12,5,12,0,0),
-                    CategoryID = 3
+                    CategoryId = 3
                 },
                 new Pair
                 {
@@ -165,7 +160,7 @@ namespace Kladionica.DAL
                     Type2 = 1.77m,
                     Typex = 4.89m,
                     StartDate = new DateTime(2018,12,5,12,0,0),
-                    CategoryID = 3
+                    CategoryId = 3
                 },
                 new Pair
                 {
@@ -175,7 +170,7 @@ namespace Kladionica.DAL
                     Type2 = 4.77m,
                     Typex = 2.89m,
                     StartDate = new DateTime(2018,12,5,12,0,0),
-                    CategoryID = 3
+                    CategoryId = 3
                 },
                 new Pair
                 {
@@ -185,7 +180,7 @@ namespace Kladionica.DAL
                     Type2 = 1.77m,
                     Typex = 6.89m,
                     StartDate = new DateTime(2018,12,5,12,0,0),
-                    CategoryID = 5
+                    CategoryId = 5
                 },
                 new Pair
                 {
@@ -195,7 +190,7 @@ namespace Kladionica.DAL
                     Type2 = 1.77m,
                     Typex = 7.89m,
                     StartDate = new DateTime(2018,12,5,12,0,0),
-                    CategoryID = 5
+                    CategoryId = 5
                 },
                 new Pair
                 {
@@ -205,7 +200,7 @@ namespace Kladionica.DAL
                     Type2 = 6.77m,
                     Typex = 9.89m,
                     StartDate = new DateTime(2018,12,5,12,0,0),
-                    CategoryID = 6
+                    CategoryId = 6
                 },
                 new Pair
                 {
@@ -215,7 +210,7 @@ namespace Kladionica.DAL
                     Type2 = 2.77m,
                     Typex = 3.89m,
                     StartDate = new DateTime(2018,12,5,12,0,0),
-                    CategoryID = 6
+                    CategoryId = 6
                 },
                 new Pair
                 {
@@ -225,7 +220,7 @@ namespace Kladionica.DAL
                     Type2 = 1.77m,
                     Typex = 2.89m,
                     StartDate = new DateTime(2018,12,5,12,0,0),
-                    CategoryID = 7
+                    CategoryId = 7
                 },
                 new Pair
                 {
@@ -235,7 +230,7 @@ namespace Kladionica.DAL
                     Type2 = 7.77m,
                     Typex = 12.89m,
                     StartDate = new DateTime(2018,12,5,12,0,0),
-                    CategoryID = 7
+                    CategoryId = 7
                 },
             };
 

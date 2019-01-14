@@ -41,16 +41,16 @@
         $(document).ready(function () {
             var url = '@Url.Action("PairsList", "Home")';
             //Update pairs table on sport category select
-            $('input[name=sport-select]').change(function () {
+            $("input[name=sport-select]").change(function () {
                 var keyWord = $(this).val();
-                $('#pairs-table').load(url, { sportName: keyWord });
+                $("#pairs-table").load(url, { sportName: keyWord });
             });
 
             //Update total winnings on bet amount field change
-            $('input[id=betAmount]').change(function () {
+            $("input[id=betAmount]").change(function () {
                 amount = $(this).val();
                 amount = (amount * totalQuota).toFixed(2);
-                $("#winAmount").html("<strong> " + amount.toString() + " KN" + "</strong>")
+                $("#winAmount").html("<strong> " + amount.toString() + " KN" + "</strong>");
             });
         });
 
@@ -58,7 +58,6 @@
         function Remove(button) {
             //Determine the reference of the Row using the Button.
             var row = $(button).closest("tr");
-            var name = $("td", row).eq(1).html();
             var id = $("td", row).eq(0).html().trim();
             var type = $("td", row).eq(2).html().split(" -")[0];
 
@@ -72,7 +71,7 @@
             UpdateTotalQuota(parseFloat(quota.replace(',', '.')) * -1.0);
 
             //Untoggle pair type button from pairs table
-            $('#pairs-table').find("#" + id).find("[value=" + type + "]").button("toggle");
+            $("#pairs-table").find("#" + id).find("[value=" + type + "]").button("toggle");
 
         };
 
@@ -85,35 +84,33 @@
                 totalQuota = (totalQuota * quota).toFixed(2);
             }
             if (bonus.bonus5 && !bonus.applied5) {
-                debugger;
                 totalQuota = (parseFloat(totalQuota) + 5.0).toFixed(2);
-                debugger;
                 bonus.applied5 = true;
             }
             if (bonus.bonus10 && !bonus.applied10) {
                 totalQuota = (parseFloat(totalQuota) + 10.0).toFixed(2);
                 bonus.applied10 = true;
             }
-            $("#total-qouta").html("<strong> " + totalQuota.toString() + "</strong>")
+            $("#total-quota").html("<strong> " + totalQuota.toString() + "</strong>");
         };
 
         //Return array of all pairs from the current ticket table
         function GetTicketPairs() {
-            var TicketPairs = new Array();
+            var ticketPairs = [];
             $("#tblTicket TBODY TR").each(function () {
                 var row = $(this);
-                TicketPairs.push({
+                ticketPairs.push({
                     "PairId": row.find("TD").eq(0).html().trim(),
                     "Type": row.find("TD").eq(2).html().split(" -")[0]
                 });
             });
 
-            return TicketPairs;
+            return ticketPairs;
         };
 
 
         function GetBonus() {
-            var categories = new Array();
+            var categories = [];
 
             //Load all pair categories from current ticket
             $("#tblTicket TBODY TR").each(function () {
@@ -140,7 +137,7 @@
             
 
             //If any category appears 2 times show bonus5 popup
-            if (counts[res] == 2 && !bonus.bonus5) {
+            if (counts[res] === 2 && !bonus.bonus5) {
                 alert("Ako dodate još 1 par iz kategorije " + res + " ostvarite bonus od +5 na ukupnu kvotu!");
             }
             else if (counts[res] >= 3 && !bonus.applied5) {
@@ -165,7 +162,7 @@
 
             //Get bet type and quota from the button
             var betType = $(this).val();
-            var quota = $(this).attr('title');
+            var quota = $(this).attr("title");
             
             //Get Pair ID and Full Name string from the button table row
             var pairId = $btnRow.find("td:nth-child(1)");
@@ -208,7 +205,7 @@
         //Send ticket data
         $("body").on("click", "#btnSubmit", function () {
             var ticketData = {
-                "BetAmount": +$('input[id=betAmount]').val(),
+                "BetAmount": +$("input[id=betAmount]").val(),
                 //Placeholder for authentication
                 "UserID": 1,
                 "BonusQuota5": bonus.bonus5,
@@ -229,7 +226,6 @@
                     alert(jsonResponse.message);
 
                     if (jsonResponse.success) {
-                        debugger;
                         location.reload();
                     }
                 }
