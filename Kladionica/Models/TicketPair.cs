@@ -10,8 +10,8 @@ namespace Kladionica.Models
         [Key, Column(Order = 1)]
         public int PairId { get; set; } //FK
 
-        public Ticket Ticket { get; set; }
-        public Pair Pair { get; set; }
+        public virtual Ticket Ticket { get; set; }
+        public virtual Pair Pair { get; set; }
 
         public string Type { get; set; }
     }

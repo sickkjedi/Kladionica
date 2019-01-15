@@ -26,7 +26,7 @@ namespace Kladionica.Models
         public int CategoryId { get; set; } //FK
         public virtual Category Category { get; set; }
 
-        public ICollection<TicketPair> TicketPairs { get; set; } //navigation property
+        public virtual ICollection<TicketPair> TicketPairs { get; set; } //navigation property
 
         public decimal GetTypeQuota(string Type)
         {

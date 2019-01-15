@@ -16,9 +16,9 @@ namespace Kladionica.Models
         public bool BonusQuota10 { get; set; } = false;
 
         public int UserId { get; set; } //FK
-        public User User { get; set; }
+        public virtual User User { get; set; }
 
-        public ICollection<TicketPair> TicketPairs { get; set; } //Navigation property
+        public virtual ICollection<TicketPair> TicketPairs { get; set; } //Navigation property
 
         public decimal GetTotalQuota()
         {

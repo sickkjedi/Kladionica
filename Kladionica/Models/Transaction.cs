@@ -13,7 +13,7 @@ namespace Kladionica.Models
         public bool Success { get; set; }
 
         public int UserId { get; set; } //FK
-        public User User { get; set; }
+        public virtual User User { get; set; }
 
     }
 }
