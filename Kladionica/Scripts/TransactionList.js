@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    var url = "/Home/TransactionList";
+    var url = "/Transactions/TransactionList";
     $("body").on("click", "#btnDeposit", function () {
         var amount = $("input[id=depositAmount]").val();
 

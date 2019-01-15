@@ -148,9 +148,13 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TicketsController.cs" />
+    <Compile Include="Controllers\TransactionsController.cs" />
     <Compile Include="DAL\KladionicaContext.cs" />
     <Compile Include="DAL\KladionicaInitializer.cs" />
+    <Compile Include="DAL\KladionicaInterface.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -235,7 +239,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Contact\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
@@ -249,8 +253,8 @@
     <Content Include="Views\Shared\_NavBar.cshtml" />
     <Content Include="Views\Shared\_PairsList.cshtml" />
     <Content Include="Views\Shared\_Ticket.cshtml" />
-    <Content Include="Views\Home\TicketList.cshtml" />
-    <Content Include="Views\Home\TransactionList.cshtml" />
+    <Content Include="Views\Tickets\TicketList.cshtml" />
+    <Content Include="Views\Transactions\TransactionList.cshtml" />
     <Content Include="Views\Shared\_SportSelect.cshtml" />
   </ItemGroup>
   <ItemGroup>
