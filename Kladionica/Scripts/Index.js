@@ -8,7 +8,7 @@ var totalQuota = 1.0;
 var amount = 0;
 
 $(document).ready(function () {
-    var url = '@Url.Action("PairsList", "Home")';
+    var url = "/Home/PairsList";
     //Update pairs table on sport category select
     $("input[name=sport-select]").change(function () {
         var keyWord = $(this).val();
